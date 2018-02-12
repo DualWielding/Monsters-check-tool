@@ -1,14 +1,25 @@
-import{ Encounter } from "./encounter.js";
+import { Encounter } from "./encounter.js";
+import { readJSONFile } from "./tools.js"
 
 const body = document.querySelector('body');
-const encounters_number = 2;
+var encountersPath = document.location.pathname.replace("main.html", "encounters.json")
+
+readJSONFile(encountersPath, txt => {
+	var encounterDatas = JSON.parse(txt);
+	
+	encounterDatas.forEach(function(encounterData){
+		// Set DOM Container and title
+		var encounterContainer = addNode(body, "section");
+		addNode(addNode(encounterContainer, "h2"), "text", "Encounter");
+		
+		// Actually calculate the encounter
+		var encounter = new Encounter(encounterData, showEncounter, encounterContainer);
+	});
+	
+});
 
 // Add every encounters
-for( var i = 1 ; i <= encounters_number ; i++){
-	var encounterContainer = addNode(body, "section");
-	addNode(addNode(encounterContainer, "h2"), "text", `Encounter ${i}`);
-	var encounter = new Encounter(i, showEncounter, encounterContainer);
-}
+
 
 function showEncounter(scenarios, container){
 	

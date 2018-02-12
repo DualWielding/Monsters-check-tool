@@ -1,27 +1,21 @@
 import { readJSONFile } from "./tools.js"
 
 class Encounter {
-	constructor(number, callback, container) {
-		this.number = number;
+	constructor(encounterData, callback, container) {
 		
-		// Get the encounter data
-		var monsterNamesPath = document.location.pathname.replace("main.html", `encounters/encounter_${number}.json`);
-
-		readJSONFile(monsterNamesPath, txt => {
-			this.monsterNames = JSON.parse(txt);
-			this.monsters = [];
+		this.monsterNames = encounterData;
+		this.monsters = [];
+	
+		// Fetch the monsters and gather their decks
+		this.monsterNames.forEach(name => {
+			var monsterPath = document.location.pathname.replace("main.html", `monsters/${name}.json`);
 		
-			// Fetch the monsters and gather their decks
-			this.monsterNames.forEach(name => {
-				var monsterPath = document.location.pathname.replace("main.html", `monsters/${name}.json`);
-			
-				readJSONFile(monsterPath, txt => {
-					this.monsters.push(JSON.parse(txt));
-					// Once decks are gathered, calculate the odds
-					if(this.monsters.length == this.monsterNames.length){
-						this.calculateOdds(callback, container);
-					}
-				});
+			readJSONFile(monsterPath, txt => {
+				this.monsters.push(JSON.parse(txt));
+				// Once decks are gathered, calculate the odds
+				if(this.monsters.length == this.monsterNames.length){
+					this.calculateOdds(callback, container);
+				}
 			});
 		});
 	}
