@@ -1,0 +1,25 @@
+{
+	"type": "beast",
+	"name": "fast_bat",
+	"attack": 1,
+	"defense": 0,
+	"init": 4,
+	"deck": [
+		{
+			"attack": 0,
+			"defense": 0
+		},
+		{
+			"attack": 0,
+			"defense": 0
+		},
+		{
+			"attack": 1,
+			"defense": 0
+		},
+		{
+			"attack": 0,
+			"defense": 1
+		}
+	]
+}
