@@ -50,7 +50,7 @@ class Encounter {
 			var incremented = false;
 			
 			for(var idx in this.monsters){
-				scenario.monsters[idx].card = this.monsters[idx].deck[counter[idx]];
+				scenario.monsters[idx].cards = [this.monsters[idx].deck[counter[idx]]];
 				scenario.summary.attack += this.monsters[idx].deck[counter[idx]].attack;
 				scenario.summary.defense += this.monsters[idx].deck[counter[idx]].defense;
 				scenario.odds *= 1.0 / this.monsters[idx].deck.length
@@ -71,6 +71,9 @@ class Encounter {
 			
 			if(this.scenarios.hasOwnProperty(id)){
 				this.scenarios[id].odds += scenario.odds;
+				for(var monsterIdx in scenario.monsters){
+					this.scenarios[id].monsters[monsterIdx].cards.push(scenario.monsters[monsterIdx].cards[0])
+				}
 			} else {
 				this.scenarios[id] = scenario;
 			}
